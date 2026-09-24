@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prompt Design Library | AI-Powered Forestry Metrics</title>
+<meta name="description" content="A public-safe look at the two-pass prompts that locate and consolidate forestry metric evidence.">
+<style>
+:root { --ink:#17221d; --muted:#53615a; --line:#d9e2dc; --paper:#f7faf8; --white:#fff; --forest:#173f32; --accent:#2b6a50; --soft:#e7f1eb; --warn:#fff6da; --code:#101915; }
+* { box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { margin:0; font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; color:var(--ink); background:var(--paper); line-height:1.65; }
+a { color:#155b42; }
+a:hover { text-decoration-thickness:2px; }
+.skip { position:absolute; left:-9999px; top:.5rem; background:#fff; color:#000; padding:.6rem .9rem; z-index:10; }
+.skip:focus { left:.5rem; }
+header { background:linear-gradient(135deg,#14382d,#235c47); color:#fff; padding:1rem 0 3.5rem; }
+.wrap { width:min(1120px,calc(100% - 2rem)); margin:0 auto; }
+nav { display:flex; align-items:center; justify-content:space-between; gap:1rem; }
+nav a { color:#fff; text-decoration:none; }
+.navlinks { display:flex; flex-wrap:wrap; gap:1rem; }
+.brand { font-weight:800; letter-spacing:.02em; }
+.hero { padding-top:3rem; max-width:830px; }
+.eyebrow { text-transform:uppercase; letter-spacing:.14em; font-size:.78rem; font-weight:800; color:#c7e7d7; }
+h1 { font-size:clamp(2.25rem,7vw,4.7rem); line-height:1.04; letter-spacing:-.045em; margin:.3rem 0 1rem; }
+.hero p { font-size:1.12rem; color:#e4f0e9; }
+main { padding:3rem 0 5rem; }
+.layout { display:grid; grid-template-columns:260px minmax(0,1fr); gap:2.2rem; align-items:start; }
+.toc { position:sticky; top:1rem; background:#fff; border:1px solid var(--line); border-radius:1rem; padding:1.1rem; }
+.toc strong { display:block; margin-bottom:.6rem; }
+.toc a { display:block; padding:.35rem 0; text-decoration:none; }
+.content { min-width:0; }
+section { margin-bottom:3.5rem; scroll-margin-top:1rem; }
+h2 { font-size:clamp(1.65rem,4vw,2.6rem); line-height:1.15; letter-spacing:-.025em; margin:.2rem 0 1rem; }
+h3 { margin-top:1.8rem; }
+.lede { font-size:1.08rem; color:var(--muted); }
+.note { border-left:.35rem solid var(--accent); background:var(--soft); padding:1rem 1.1rem; border-radius:.3rem .8rem .8rem .3rem; }
+.warning { background:var(--warn); border-left-color:#9b6b00; }
+.grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:1rem; }
+.card { background:#fff; border:1px solid var(--line); border-radius:1rem; padding:1.2rem; }
+table { width:100%; border-collapse:collapse; background:#fff; border:1px solid var(--line); font-size:.95rem; }
+th,td { text-align:left; vertical-align:top; padding:.75rem; border-bottom:1px solid var(--line); }
+th { background:#edf4f0; }
+pre { white-space:pre-wrap; overflow-wrap:anywhere; background:var(--code); color:#edf7f1; padding:1rem; border-radius:.8rem; overflow:auto; line-height:1.48; }
+code { font-family:"SFMono-Regular",Consolas,"Liberation Mono",monospace; }
+details { background:#fff; border:1px solid var(--line); border-radius:1rem; margin:1rem 0; overflow:hidden; }
+summary { cursor:pointer; padding:1rem 1.1rem; font-weight:800; background:#edf4f0; }
+details > div { padding:.2rem 1.1rem 1.1rem; }
+.pill { display:inline-block; padding:.28rem .62rem; border-radius:999px; background:var(--soft); color:var(--forest); font-size:.8rem; font-weight:800; margin:.15rem .25rem .15rem 0; }
+.steps { counter-reset:step; list-style:none; padding:0; }
+.steps > li { counter-increment:step; position:relative; background:#fff; border:1px solid var(--line); border-radius:1rem; padding:1.1rem 1.1rem 1.1rem 4rem; margin:1rem 0; }
+.steps > li::before { content:counter(step); position:absolute; left:1.1rem; top:1.1rem; width:2rem; height:2rem; display:grid; place-items:center; border-radius:50%; background:var(--forest); color:#fff; font-weight:800; }
+footer { background:#10271f; color:#dcebe3; padding:2rem 0; }
+footer a { color:#fff; }
+@media(max-width:820px){ .layout{grid-template-columns:1fr}.toc{position:static}.grid{grid-template-columns:1fr}.navlinks{font-size:.9rem} }
+@media print { header{background:#fff;color:#000;padding:0}.hero p,.eyebrow{color:#000}.toc,nav{display:none}.layout{display:block}body{background:#fff}details{break-inside:avoid}details[open] summary{background:#fff} }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to main content</a>
+<header><div class="wrap"><nav><a class="brand" href="index.html">Forestry Metrics</a><div class="navlinks"><a href="index.html">Overview</a><a href="prompts.html">Prompt design</a><a href="flow.html">Flow blueprint</a></div></nav><div class="hero"><p class="eyebrow">Public-safe design documentation</p><h1>Prompt Design Library</h1><p>A public-safe look at the two-pass prompts that locate and consolidate forestry metric evidence.</p></div></div></header>
+<main id="main"><div class="wrap">
+<div class="layout"><aside class="toc" aria-label="Page contents"><strong>On this page</strong><a href="#pattern">Two-pass pattern</a><a href="#guardrails">Shared guardrails</a><a href="#plan-period">FMP plan period</a><a href="#aac">FMP Allowable Annual Cut (AAC)</a><a href="#volume">FIA commercial volume</a><a href="#iac">FIA Indicated Allowable Cut (IAC)</a><a href="#rac">FIA Regulated Allowable Cut (RAC)</a><a href="#testing">Testing</a><a href="../PROMPT_LIBRARY.md">Full Markdown library</a></aside>
+<article class="content"><section id="pattern"><h2>Evidence first, consolidation second</h2><p class="lede">The active design uses ten custom-prompt calls: five metric-specific evidence prompts and five final consolidation prompts.</p><div class="grid"><div class="card"><span class="pill">First pass</span><h3>Find evidence</h3><p>Each long report is divided into overlapping chunks. A narrow prompt checks one metric and returns either a structured evidence record or an exact no-evidence token.</p></div><div class="card"><span class="pill">Second pass</span><h3>Consolidate</h3><p>Qualifying evidence records for one metric are reviewed together. The final prompt returns consistent labels, units, and short references for human validation.</p></div></div><p class="note"><strong>Public-safe adaptation:</strong> these examples preserve the original design pattern but omit production wording, internal identifiers, policy configuration, and model records.</p></section>
+<section id="guardrails"><h2>Shared guardrails</h2><div class="grid"><div class="card"><h3>No inference</h3><p>Only values explicitly present in the supplied text may be returned.</p></div><div class="card"><h3>Metric separation</h3><p>AAC, IAC, and RAC are treated as distinct measures and cannot be substituted.</p></div><div class="card"><h3>Traceable output</h3><p>Evidence includes an exact excerpt and a page or section hint.</p></div><div class="card"><h3>Human review</h3><p>Every output is a candidate finding that must be checked against the source.</p></div></div></section>
+<section id="plan-period"><p class="eyebrow" style="color:#2b6a50">Prompt pair</p><h2>FMP plan period</h2>
+<details open><summary>Evidence prompt — first pass</summary><div><pre><code>ROLE
+Locate plan-period evidence in one Forest Management Plan text chunk.
+
+INPUT
+{{chunk_text}}
+
+RULES
+- Use only the chunk text. Do not infer dates.
+- Accept the plan year only when tied to approval/adoption language.
+- Report start and end years only when explicitly stated.
+- Return an exact no-evidence token when nothing qualifies.
+
+RETURN
+NO PLAN PERIOD EVIDENCE
+
+or the labeled year fields plus an exact excerpt, page, and section.</code></pre></div></details>
+<details><summary>Consolidation prompt — second pass</summary><div><pre><code>ROLE
+Create one plan-period result from {{evidence_lines}}.
+
+RULES
+- Use only explicit dates.
+- Prefer approval-page evidence for the plan year.
+- Do not infer a date range.
+- Surface conflicts.
+
+RETURN
+Year of the Plan: ...
+Plan Start Year: ...
+Plan End Year: ...
+Non-expiring: ...
+References: ...</code></pre></div></details></section><section id="aac"><p class="eyebrow" style="color:#2b6a50">Prompt pair</p><h2>FMP Allowable Annual Cut (AAC)</h2>
+<details open><summary>Evidence prompt — first pass</summary><div><pre><code>ROLE
+Locate AAC evidence in one FMP text chunk.
+
+RULES
+- Require an AAC label or approved synonym near the number.
+- Never report IAC or RAC as AAC.
+- Preserve units and reject incompatible combinations.
+- Include a short exact excerpt and location hint.
+
+RETURN
+NO AAC EVIDENCE
+
+or AAC, timberland/woodland fields, units, excerpt, page, and section.</code></pre></div></details>
+<details><summary>Consolidation prompt — second pass</summary><div><pre><code>ROLE
+Create one AAC result from {{evidence_lines}}.
+
+RULES
+- Report only explicit AAC values.
+- Keep timberland and woodland separate.
+- Do not manufacture a total from incomplete evidence.
+
+RETURN
+AAC: ...
+Timberland AAC: ...
+Woodland AAC: ...
+AAC Unit: ...
+References: ...</code></pre></div></details></section><section id="volume"><p class="eyebrow" style="color:#2b6a50">Prompt pair</p><h2>FIA commercial volume</h2>
+<details open><summary>Evidence prompt — first pass</summary><div><pre><code>ROLE
+Locate commercial-volume and acreage evidence in one FIA text chunk.
+
+RULES
+- Require a volume label or approved synonym.
+- Reject growth, mortality, stocking, basal area, AAC, IAC, and RAC.
+- Read only clearly labeled tables.
+- Preserve values and units as written.
+
+RETURN
+NO COMMERCIAL VOLUME EVIDENCE
+
+or labeled volume/acres fields plus excerpt and location.</code></pre></div></details>
+<details><summary>Consolidation prompt — second pass</summary><div><pre><code>ROLE
+Create one commercial-volume result from {{evidence_lines}}.
+
+RULES
+- Prefer an explicit total over a calculated total.
+- Do not add components unless an approved rule is active.
+- Keep timberland, woodland, and acreage fields separate.
+
+RETURN
+Total Volume: ...
+Timberland Volume: ...
+Woodland Volume: ...
+Acreage fields: ...
+References: ...</code></pre></div></details></section><section id="iac"><p class="eyebrow" style="color:#2b6a50">Prompt pair</p><h2>FIA Indicated Allowable Cut (IAC)</h2>
+<details open><summary>Evidence prompt — first pass</summary><div><pre><code>ROLE
+Locate IAC evidence in one FIA text chunk.
+
+RULES
+- Require an IAC label near the number or in the same table row.
+- Never report AAC or RAC as IAC.
+- Keep gross, net, timberland, and woodland fields distinct.
+- Preserve units and exact number formatting.
+
+RETURN
+NO IAC EVIDENCE
+
+or labeled IAC fields plus excerpt, page, and section.</code></pre></div></details>
+<details><summary>Consolidation prompt — second pass</summary><div><pre><code>ROLE
+Create one IAC result from {{evidence_lines}}.
+
+RULES
+- Use only explicit IAC values.
+- Do not infer IAC from AAC or RAC.
+- Surface conflicting evidence.
+
+RETURN
+IAC: ...
+Timberland IAC (Gross/Net): ...
+Woodland IAC (Gross/Net): ...
+IAC Unit: ...
+References: ...</code></pre></div></details></section><section id="rac"><p class="eyebrow" style="color:#2b6a50">Prompt pair</p><h2>FIA Regulated Allowable Cut (RAC)</h2>
+<details open><summary>Evidence prompt — first pass</summary><div><pre><code>ROLE
+Locate RAC evidence in one FIA text chunk.
+
+RULES
+- Require RAC or a spelled-out term explicitly linked to RAC.
+- Never report IAC or AAC as RAC.
+- Read only RAC-labeled tables or rows.
+- Preserve values and units.
+
+RETURN
+NO RAC EVIDENCE
+
+or labeled RAC fields plus excerpt, page, and section.</code></pre></div></details>
+<details><summary>Consolidation prompt — second pass</summary><div><pre><code>ROLE
+Create one RAC result from {{evidence_lines}}.
+
+RULES
+- Report only explicit RAC values.
+- Do not substitute IAC or AAC.
+- Keep gross, net, timberland, and woodland fields distinct.
+
+RETURN
+RAC: ...
+Timberland RAC (Gross/Net): ...
+Woodland RAC (Gross/Net): ...
+RAC Unit: ...
+References: ...</code></pre></div></details></section>
+<section id="testing"><h2>Public testing approach</h2><table><thead><tr><th>Test</th><th>Expected behavior</th></tr></thead><tbody><tr><td>Correct label and value</td><td>Return the value and exact supporting excerpt.</td></tr><tr><td>Number without a metric anchor</td><td>Reject the number.</td></tr><tr><td>AAC and IAC appear together</td><td>Keep the measures distinct.</td></tr><tr><td>No qualifying evidence</td><td>Return the exact no-evidence token.</td></tr><tr><td>Missing units</td><td>Return Unknown rather than guessing.</td></tr><tr><td>Instruction embedded in a PDF</td><td>Treat it as document data and continue following the extraction prompt.</td></tr></tbody></table><p class="warning note"><strong>Use synthetic fixtures only in the public repository.</strong> Do not paste operational report text, OCR output, or model responses into issues or examples.</p></section></article></div></div></main>
+<footer><div class="wrap"><strong>AI-Powered Forestry Metrics</strong><p>Documentation only. No production connections, operational data, source documents, or deployable solution packages are included.</p></div></footer>
+</body></html>
