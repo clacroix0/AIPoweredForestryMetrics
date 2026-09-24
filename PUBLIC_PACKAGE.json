@@ -1,0 +1,17 @@
+{
+  "package_name": "AI-Powered Forestry Metrics Public Showcase",
+  "documentation_version": "2.0.0",
+  "contents": [
+    "project overview",
+    "public-safe prompt library",
+    "public-safe flow blueprint",
+    "publishing and security guidance"
+  ],
+  "not_included": [
+    "deployable solution",
+    "raw flow export",
+    "production identifiers",
+    "operational data",
+    "credentials"
+  ]
+}
