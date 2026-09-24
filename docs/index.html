@@ -1,0 +1,463 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Public overview of AI-Powered Forestry Metrics, a human-reviewed Power Platform workflow for forestry document analysis and reporting comparison.">
+  <title>AI-Powered Forestry Metrics — Public Project Overview</title>
+  <style>
+    :root {
+      --ink: #16332b;
+      --muted: #536861;
+      --green-950: #0d2b24;
+      --green-900: #123a30;
+      --green-800: #1a4b3e;
+      --green-700: #246351;
+      --green-100: #dfece7;
+      --green-50: #f1f7f4;
+      --paper: #ffffff;
+      --canvas: #f5f7f6;
+      --line: #d5dfdb;
+      --amber: #8a5a00;
+      --amber-bg: #fff4d9;
+      --shadow: 0 18px 50px rgba(18, 58, 48, 0.12);
+      --radius: 22px;
+      --max: 1180px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--canvas);
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.6;
+    }
+    a { color: inherit; }
+    img { max-width: 100%; height: auto; }
+    .skip {
+      position: absolute;
+      left: 1rem;
+      top: -5rem;
+      z-index: 20;
+      background: #fff;
+      color: #111;
+      padding: .7rem 1rem;
+      border-radius: .5rem;
+    }
+    .skip:focus { top: 1rem; }
+    .wrap { width: min(calc(100% - 2rem), var(--max)); margin-inline: auto; }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      color: white;
+      background:
+        radial-gradient(circle at 88% 18%, rgba(177, 222, 204, .22), transparent 22rem),
+        linear-gradient(120deg, var(--green-950), var(--green-700));
+      padding: 1.1rem 0 5rem;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      right: -8rem;
+      bottom: -13rem;
+      width: 32rem;
+      height: 32rem;
+      border: 3.8rem solid rgba(255,255,255,.06);
+      border-radius: 50%;
+    }
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      min-height: 3rem;
+    }
+    .brand { font-weight: 800; letter-spacing: -.02em; }
+    .nav-links { display: flex; gap: 1.2rem; font-size: .94rem; }
+    .nav-links a { text-decoration: none; color: rgba(255,255,255,.88); }
+    .nav-links a:hover, .nav-links a:focus-visible { color: #fff; text-decoration: underline; text-underline-offset: .25rem; }
+
+    .hero-grid {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1.08fr .92fr;
+      align-items: center;
+      gap: 4rem;
+      padding-top: 4rem;
+    }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      margin: 0 0 1rem;
+      text-transform: uppercase;
+      letter-spacing: .13em;
+      font-size: .76rem;
+      font-weight: 800;
+      color: #cfe8de;
+    }
+    .eyebrow::before { content: ""; width: 1.8rem; height: 2px; background: currentColor; }
+    h1 {
+      margin: 0;
+      max-width: 13ch;
+      font-size: clamp(3rem, 7vw, 5.8rem);
+      line-height: .97;
+      letter-spacing: -.055em;
+    }
+    .hero-copy > p:not(.eyebrow) {
+      max-width: 42rem;
+      margin: 1.5rem 0 0;
+      color: rgba(255,255,255,.88);
+      font-size: clamp(1.06rem, 2vw, 1.3rem);
+    }
+    .actions { display: flex; flex-wrap: wrap; gap: .8rem; margin-top: 2rem; }
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 2.9rem;
+      padding: .72rem 1.05rem;
+      border: 1px solid rgba(255,255,255,.35);
+      border-radius: 999px;
+      text-decoration: none;
+      font-weight: 750;
+    }
+    .button.primary { background: #fff; color: var(--green-900); border-color: #fff; }
+    .button:hover, .button:focus-visible { transform: translateY(-1px); box-shadow: 0 10px 24px rgba(0,0,0,.18); }
+
+    .mock-shell {
+      padding: .8rem;
+      border: 1px solid rgba(255,255,255,.22);
+      border-radius: 1.3rem;
+      background: rgba(255,255,255,.1);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 28px 70px rgba(0,0,0,.22);
+    }
+    .mock-window { overflow: hidden; border-radius: .9rem; background: #fff; color: var(--ink); }
+    .mock-top { display: flex; gap: .4rem; padding: .65rem .8rem; background: #e9eeec; }
+    .dot { width: .62rem; height: .62rem; border-radius: 50%; background: #a6b6b0; }
+    .mock-body { display: grid; grid-template-columns: .95fr 1.05fr; min-height: 20rem; }
+    .mock-panel { padding: 1.2rem; }
+    .mock-panel + .mock-panel { border-left: 1px solid var(--line); background: #f8faf9; }
+    .mock-kicker { margin: 0 0 .35rem; color: var(--green-700); font-size: .68rem; text-transform: uppercase; letter-spacing: .11em; font-weight: 850; }
+    .mock-title { margin: 0; font-size: 1.15rem; }
+    .file-card { display: flex; align-items: center; gap: .7rem; margin: 1rem 0; padding: .8rem; border: 1px solid var(--line); border-radius: .8rem; }
+    .file-icon { display: grid; place-items: center; width: 2.4rem; height: 2.4rem; border-radius: .7rem; background: var(--green-100); font-weight: 900; }
+    .file-card strong, .file-card small { display: block; }
+    .file-card small { color: var(--muted); }
+    .metric { margin-top: .8rem; padding: .8rem; border-radius: .8rem; background: var(--green-50); border: 1px solid #cfe0d9; }
+    .metric span { display: block; color: var(--muted); font-size: .74rem; }
+    .metric b { font-size: .96rem; }
+    .chart { display: flex; align-items: end; gap: .55rem; height: 9rem; margin-top: 1.1rem; padding: 0 .5rem .4rem; border-bottom: 1px solid #b9c6c1; }
+    .bar { flex: 1; min-width: 1rem; border-radius: .5rem .5rem 0 0; background: linear-gradient(180deg, #3f846e, #1b5a49); }
+    .bar:nth-child(1) { height: 44%; }
+    .bar:nth-child(2) { height: 68%; }
+    .bar:nth-child(3) { height: 55%; }
+    .bar:nth-child(4) { height: 82%; }
+    .synthetic { margin: .75rem 0 0; color: var(--muted); font-size: .72rem; }
+
+    .status-strip { margin-top: -2.1rem; position: relative; z-index: 2; }
+    .status-card {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      overflow: hidden;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 1rem;
+      box-shadow: var(--shadow);
+    }
+    .status-item { padding: 1rem 1.25rem; }
+    .status-item + .status-item { border-left: 1px solid var(--line); }
+    .status-item strong { display: block; font-size: .92rem; }
+    .status-item span { color: var(--muted); font-size: .84rem; }
+
+    main { padding: 5.5rem 0; }
+    section { scroll-margin-top: 1rem; }
+    .section-head { max-width: 47rem; margin-bottom: 2rem; }
+    .section-label { margin: 0 0 .45rem; color: var(--green-700); text-transform: uppercase; letter-spacing: .12em; font-size: .75rem; font-weight: 850; }
+    h2 { margin: 0; font-size: clamp(2rem, 4vw, 3.25rem); line-height: 1.08; letter-spacing: -.035em; }
+    .section-head p { margin: .9rem 0 0; color: var(--muted); font-size: 1.08rem; }
+
+    .challenge { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
+    .panel {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: clamp(1.3rem, 3vw, 2rem);
+      box-shadow: 0 12px 35px rgba(18,58,48,.06);
+    }
+    .panel h3 { margin: 0 0 .5rem; font-size: 1.25rem; }
+    .panel p { margin: 0; color: var(--muted); }
+    .panel.problem { background: #fbfcfb; }
+    .panel.solution { background: linear-gradient(145deg, #e7f2ed, #f8fbfa); }
+
+    .workflow { margin-top: 5.5rem; }
+    .workflow img { display: block; border-radius: var(--radius); box-shadow: var(--shadow); }
+
+    .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+    .card {
+      min-height: 15rem;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 1rem;
+      padding: 1.35rem;
+    }
+    .number { display: grid; place-items: center; width: 2.3rem; height: 2.3rem; border-radius: .75rem; background: var(--green-100); color: var(--green-800); font-weight: 900; }
+    .card h3 { margin: 1.15rem 0 .45rem; font-size: 1.18rem; }
+    .card p { margin: 0; color: var(--muted); }
+
+    .responsible {
+      margin-top: 5.5rem;
+      display: grid;
+      grid-template-columns: .9fr 1.1fr;
+      gap: 1.2rem;
+      align-items: stretch;
+    }
+    .responsible .dark {
+      background: var(--green-950);
+      color: #fff;
+      border: 0;
+    }
+    .dark p { color: #cfe0d9; }
+    .principles { display: grid; gap: .7rem; }
+    .principle { padding: 1rem; border: 1px solid var(--line); border-radius: .9rem; background: #fff; }
+    .principle strong { display: block; }
+    .principle span { color: var(--muted); font-size: .92rem; }
+
+    .boundary { margin-top: 5.5rem; }
+    .boundary-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    ul.clean { margin: .8rem 0 0; padding: 0; list-style: none; }
+    ul.clean li { position: relative; margin: .62rem 0; padding-left: 1.55rem; color: var(--muted); }
+    ul.clean li::before { position: absolute; left: 0; font-weight: 900; }
+    .included li::before { content: "✓"; color: var(--green-700); }
+    .excluded li::before { content: "—"; color: #8c4242; }
+
+    .note {
+      margin-top: 1rem;
+      padding: 1rem 1.15rem;
+      border-left: .28rem solid var(--amber);
+      border-radius: .65rem;
+      background: var(--amber-bg);
+      color: #5b4007;
+    }
+
+    .faq { margin-top: 5.5rem; }
+    details { background: #fff; border: 1px solid var(--line); border-radius: .8rem; margin: .7rem 0; padding: 1rem 1.1rem; }
+    summary { cursor: pointer; font-weight: 800; }
+    details p { margin: .7rem 0 0; color: var(--muted); }
+
+    footer { background: var(--green-950); color: #dce9e4; padding: 2.2rem 0; }
+    footer p { margin: 0; }
+    footer small { display: block; margin-top: .45rem; color: #a9c0b8; }
+
+    :focus-visible { outline: 3px solid #f3c96a; outline-offset: 3px; }
+
+    @media (max-width: 900px) {
+      .hero-grid, .responsible { grid-template-columns: 1fr; }
+      .hero-grid { gap: 2.5rem; }
+      .mock-shell { max-width: 44rem; }
+      .cards { grid-template-columns: 1fr 1fr; }
+      .challenge, .boundary-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 640px) {
+      .hero { padding-bottom: 4rem; }
+      .hero-grid { padding-top: 2.5rem; }
+      .nav-links { display: none; }
+      h1 { font-size: clamp(2.65rem, 16vw, 4.3rem); }
+      .status-card { grid-template-columns: 1fr; }
+      .status-item + .status-item { border-left: 0; border-top: 1px solid var(--line); }
+      .mock-body { grid-template-columns: 1fr; }
+      .mock-panel + .mock-panel { border-left: 0; border-top: 1px solid var(--line); }
+      .cards { grid-template-columns: 1fr; }
+      main { padding-top: 4rem; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { transition: none !important; }
+    }
+    @media print {
+      .hero { padding: 1rem 0 2rem; }
+      .nav-links, .actions, .status-strip { display: none; }
+      .hero-grid, .responsible, .challenge, .boundary-grid { grid-template-columns: 1fr; }
+      .mock-shell { display: none; }
+      main { padding: 2rem 0; }
+      .panel, .card, details { box-shadow: none; break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to main content</a>
+
+  <header class="hero">
+    <div class="wrap">
+      <nav aria-label="Primary navigation">
+        <div class="brand">Forestry Metrics</div>
+        <div class="nav-links">
+          <a href="#workflow">Workflow</a>
+          <a href="#capabilities">Capabilities</a>
+          <a href="#responsible-ai">Responsible AI</a>
+          <a href="#repository">Repository scope</a>
+        </div>
+      </nav>
+
+      <div class="hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow">Public project overview</p>
+          <h1>AI-Powered Forestry Metrics</h1>
+          <p>A human-reviewed workflow that helps forestry staff find selected information in long PDF reports and compare it with reporting data in one place.</p>
+          <div class="actions">
+            <a class="button primary" href="#workflow">See how it works</a>
+            <a class="button" href="#responsible-ai">Review the safeguards</a>
+          </div>
+        </div>
+
+        <div class="mock-shell" aria-label="Illustrative application preview">
+          <div class="mock-window">
+            <div class="mock-top" aria-hidden="true"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+            <div class="mock-body">
+              <div class="mock-panel">
+                <p class="mock-kicker">Document review</p>
+                <h2 class="mock-title">Analyze a forestry report</h2>
+                <div class="file-card">
+                  <div class="file-icon" aria-hidden="true">PDF</div>
+                  <div><strong>sample-plan.pdf</strong><small>Synthetic example</small></div>
+                </div>
+                <div class="metric"><span>Candidate plan period</span><b>2025–2034 · Verify source</b></div>
+                <div class="metric"><span>Candidate volume statement</span><b>Supporting passage found</b></div>
+              </div>
+              <div class="mock-panel">
+                <p class="mock-kicker">Reporting comparison</p>
+                <h2 class="mock-title">Review side by side</h2>
+                <div class="chart" aria-label="Decorative synthetic bar chart"><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div></div>
+                <p class="synthetic">Illustrative interface and values only. No operational data is shown.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="status-strip">
+    <div class="wrap status-card" aria-label="Repository status">
+      <div class="status-item"><strong>Public showcase</strong><span>Plain-language project description</span></div>
+      <div class="status-item"><strong>Documentation only</strong><span>No deployable application package</span></div>
+      <div class="status-item"><strong>Safe examples</strong><span>No operational records or live identifiers</span></div>
+    </div>
+  </div>
+
+  <main id="main">
+    <div class="wrap">
+      <section aria-labelledby="challenge-title">
+        <div class="section-head">
+          <p class="section-label">The project</p>
+          <h2 id="challenge-title">Less searching. More focused review.</h2>
+          <p>The project combines document intake, AI-assisted extraction, human validation, and reporting comparison in a single Power Platform experience.</p>
+        </div>
+        <div class="challenge">
+          <article class="panel problem">
+            <h3>The challenge</h3>
+            <p>Important forestry information can be distributed across long planning and inventory reports. Staff may spend significant time locating passages, transferring values into notes, and switching between tools.</p>
+          </article>
+          <article class="panel solution">
+            <h3>The approach</h3>
+            <p>The app surfaces candidate metrics and supporting text, then keeps the source document and reporting comparison central to a structured human review.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="workflow" id="workflow" aria-labelledby="workflow-title">
+        <div class="section-head">
+          <p class="section-label">Simplified workflow</p>
+          <h2 id="workflow-title">Four stages, one review path</h2>
+          <p>The public diagram intentionally omits implementation details, environment configuration, and operational data.</p>
+        </div>
+        <img src="assets/workflow.svg" alt="Forestry reports move through AI-assisted extraction, human review, and reporting comparison.">
+      </section>
+
+      <section id="capabilities" style="margin-top:5.5rem" aria-labelledby="capabilities-title">
+        <div class="section-head">
+          <p class="section-label">Capabilities</p>
+          <h2 id="capabilities-title">Designed around the reviewer's work</h2>
+          <p>The solution focuses on common tasks without treating AI output as a final determination.</p>
+        </div>
+        <div class="cards">
+          <article class="card"><div class="number">1</div><h3>Document intake</h3><p>Provides a consistent way to begin analysis of approved forestry planning and inventory PDFs.</p></article>
+          <article class="card"><div class="number">2</div><h3>Candidate extraction</h3><p>Uses text recognition and AI assistance to locate selected planning, volume, and allowable-cut information.</p></article>
+          <article class="card"><div class="number">3</div><h3>Source validation</h3><p>Keeps reviewers responsible for checking dates, units, qualifiers, and supporting passages in the original document.</p></article>
+          <article class="card"><div class="number">4</div><h3>Reporting comparison</h3><p>Places extracted candidates near relevant reporting information to reduce unnecessary tool switching.</p></article>
+          <article class="card"><div class="number">5</div><h3>Consistent workflow</h3><p>Guides users through a repeatable sequence that supports clearer review and follow-up.</p></article>
+          <article class="card"><div class="number">6</div><h3>Productivity support</h3><p>Reduces repetitive searching and copying so staff can spend more time evaluating the information.</p></article>
+        </div>
+      </section>
+
+      <section class="responsible" id="responsible-ai" aria-labelledby="responsible-title">
+        <article class="panel dark">
+          <p class="section-label" style="color:#a9d1c1">Responsible AI</p>
+          <h2 id="responsible-title">AI suggests. People decide.</h2>
+          <p>The workflow is built around human validation. Candidate results may be incomplete, inaccurate, or missing context and must be checked against authoritative sources.</p>
+        </article>
+        <div class="principles">
+          <div class="principle"><strong>Verify every result</strong><span>Check the source passage, period, units, and qualifiers before using a value.</span></div>
+          <div class="principle"><strong>Use approved information</strong><span>Follow applicable data-handling, records, privacy, and program requirements.</span></div>
+          <div class="principle"><strong>Keep public material synthetic</strong><span>Never place source reports, extracted content, internal identifiers, or protected data in a public repository.</span></div>
+          <div class="principle"><strong>Maintain human accountability</strong><span>People remain responsible for design, testing, review, approval, and official determinations.</span></div>
+        </div>
+      </section>
+
+      <section class="boundary" id="repository" aria-labelledby="repository-title">
+        <div class="section-head">
+          <p class="section-label">Public repository boundary</p>
+          <h2 id="repository-title">A showcase, not a deployment package</h2>
+          <p>This public version explains the project's purpose and design at a high level while keeping operational implementation private.</p>
+        </div>
+        <div class="boundary-grid">
+          <article class="panel">
+            <h3>Included</h3>
+            <ul class="clean included">
+              <li>Plain-language project overview</li>
+              <li>Simplified workflow diagram</li>
+              <li>Synthetic interface illustration</li>
+              <li>Responsible-AI principles</li>
+              <li>Public publishing and security guidance</li>
+            </ul>
+          </article>
+          <article class="panel">
+            <h3>Not included</h3>
+            <ul class="clean excluded">
+              <li>Power Platform solution files</li>
+              <li>Flows, prompts, formulas, or schemas</li>
+              <li>Production connections or identifiers</li>
+              <li>Operational documents or extracted text</li>
+              <li>Real records, screenshots, or protected data</li>
+            </ul>
+          </article>
+        </div>
+        <div class="note"><strong>Human review is required.</strong> This public description does not authorize use of AI-generated output as an official determination.</div>
+      </section>
+
+      <section class="faq" aria-labelledby="faq-title">
+        <div class="section-head">
+          <p class="section-label">Questions</p>
+          <h2 id="faq-title">Public showcase FAQ</h2>
+        </div>
+        <details><summary>Can this repository be used to deploy the app?</summary><p>No. It intentionally excludes all deployable solution files, connections, environment settings, and operational configuration.</p></details>
+        <details><summary>Does the preview contain real forestry data?</summary><p>No. The filename, values, chart, and interface are synthetic illustrations created for this public page.</p></details>
+        <details><summary>Can an extracted value be used without review?</summary><p>No. Every candidate result must be checked against the original source document and applicable authoritative information.</p></details>
+        <details><summary>Which Microsoft products are involved?</summary><p>The project uses Microsoft Power Apps, Power Automate, AI Builder, and Power BI. The public page omits environment-specific implementation details.</p></details>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <p><strong>AI-Powered Forestry Metrics</strong> · Public project overview</p>
+      <small>No production connections, operational data, source documents, or deployable solution packages are included.</small>
+    </div>
+  </footer>
+</body>
+</html>

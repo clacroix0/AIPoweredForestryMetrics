@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="User guide for the AI-Powered Forestry Metrics Power Platform solution.">
+  <meta name="color-scheme" content="light">
+  <title>AI-Powered Forestry Metrics | User Guide</title>
+  <style>
+    :root {
+      --forest-950:#102a22; --forest-900:#173b30; --forest-800:#1f4d3f; --forest-700:#28614f;
+      --forest-100:#e7f1ed; --forest-050:#f3f8f5; --gold-600:#9f741d; --gold-100:#f8edcf;
+      --blue-700:#205f78; --blue-100:#e3f2f7; --red-700:#9d2e2e; --red-100:#fae9e7;
+      --ink:#1b2521; --muted:#5b6863; --line:#d5dfda; --panel:#fff; --page:#f4f7f5;
+      --focus:#006fd6; --shadow:0 15px 42px rgba(16,42,34,.11); --radius:15px; --sidebar:290px;
+    }
+    *{box-sizing:border-box} html{scroll-behavior:smooth;scroll-padding-top:1rem}
+    body{margin:0;color:var(--ink);background:var(--page);font-family:Aptos,"Segoe UI",system-ui,-apple-system,sans-serif;line-height:1.58}
+    a{color:var(--forest-700);text-underline-offset:3px} a:hover{color:var(--forest-950)}
+    a:focus-visible,button:focus-visible,input:focus-visible,summary:focus-visible{outline:3px solid var(--focus);outline-offset:3px}
+    .skip{position:fixed;left:1rem;top:-5rem;z-index:99;background:#fff;color:#000;padding:.65rem 1rem;border-radius:8px;box-shadow:var(--shadow)}
+    .skip:focus{top:1rem}
+    header{position:relative;overflow:hidden;color:#fff;background:radial-gradient(circle at 84% 18%,rgba(255,255,255,.16),transparent 28%),linear-gradient(125deg,var(--forest-950),var(--forest-700));border-bottom:5px solid #c7a247}
+    header::after{content:"";position:absolute;right:-95px;bottom:-145px;width:410px;height:410px;border:1px solid rgba(255,255,255,.18);border-radius:50%;box-shadow:0 0 0 45px rgba(255,255,255,.04),0 0 0 95px rgba(255,255,255,.03)}
+    .hero{position:relative;z-index:1;max-width:1460px;margin:auto;padding:3.2rem clamp(1.4rem,5vw,4.5rem) 2.8rem;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2rem;align-items:center}
+    .eyebrow{text-transform:uppercase;letter-spacing:.12em;font-weight:800;font-size:.78rem;margin:0 0 .65rem;color:#f3d988}
+    h1{font-size:clamp(2.3rem,5vw,4.7rem);line-height:.98;margin:0;max-width:930px;letter-spacing:-.04em}
+    .subtitle{font-size:clamp(1rem,1.7vw,1.25rem);max-width:840px;margin:1.1rem 0 0;color:#edf5f1}
+    .meta{min-width:230px;background:rgba(255,255,255,.11);border:1px solid rgba(255,255,255,.25);border-radius:14px;padding:1rem 1.15rem;backdrop-filter:blur(4px)}
+    .meta div{display:grid;grid-template-columns:1fr auto;gap:1rem;padding:.42rem 0;border-bottom:1px solid rgba(255,255,255,.17)}.meta div:last-child{border:0}.meta dt{color:#d9e9e2}.meta dd{margin:0;font-weight:750}
+    .toolbar{max-width:1460px;margin:0 auto;padding:1rem clamp(1.4rem,5vw,4.5rem);display:flex;gap:.75rem;align-items:center;flex-wrap:wrap;background:#fff;border-bottom:1px solid var(--line)}
+    .toolbar input{flex:1 1 320px;min-height:44px;border:1px solid #aebbb5;border-radius:9px;padding:.65rem .8rem;font:inherit}
+    .toolbar button{min-height:44px;border:0;border-radius:9px;padding:.68rem 1rem;font:inherit;font-weight:750;cursor:pointer;background:var(--forest-800);color:#fff}.toolbar button.secondary{background:#fff;color:var(--forest-900);border:1px solid #9eb0a8}
+    .layout{max-width:1460px;margin:0 auto;padding:2rem clamp(1.4rem,5vw,4.5rem) 4rem;display:grid;grid-template-columns:var(--sidebar) minmax(0,1fr);gap:2rem;align-items:start}
+    nav{position:sticky;top:1rem;background:#fff;border:1px solid var(--line);border-radius:var(--radius);box-shadow:0 8px 25px rgba(16,42,34,.06);overflow:hidden}
+    nav h2{font-size:.82rem;text-transform:uppercase;letter-spacing:.11em;margin:0;padding:1rem 1.1rem;background:var(--forest-950);color:#fff}
+    nav ul{list-style:none;margin:0;padding:.55rem}nav a{display:flex;gap:.65rem;padding:.55rem .65rem;border-radius:8px;text-decoration:none;color:var(--ink);font-size:.91rem}nav a:hover{background:var(--forest-100)}
+    .num{color:var(--forest-700);font-weight:800;min-width:1.8rem}
+    main{min-width:0}.section{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);box-shadow:0 9px 28px rgba(16,42,34,.055);padding:clamp(1.3rem,3vw,2.25rem);margin:0 0 1.35rem}
+    .section.hidden{display:none}.section h2{font-size:clamp(1.5rem,2.4vw,2rem);line-height:1.15;margin:0 0 1rem;color:var(--forest-950)}
+    h3{color:var(--forest-900);margin:1.65rem 0 .65rem}h4{margin:1.1rem 0 .4rem}.lead{font-size:1.1rem;color:#34433d;max-width:900px}
+    .alert{display:grid;grid-template-columns:auto 1fr;gap:.8rem;border-left:5px solid var(--gold-600);background:var(--gold-100);padding:1rem 1.1rem;border-radius:10px;margin:1rem 0}.alert.danger{border-color:var(--red-700);background:var(--red-100)}.alert.info{border-color:var(--blue-700);background:var(--blue-100)}.alert strong{display:block;margin-bottom:.2rem}
+    .cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem;margin:1rem 0}.card{border:1px solid var(--line);border-radius:12px;padding:1rem;background:linear-gradient(180deg,#fff,var(--forest-050))}.card h3,.card h4{margin-top:0}.tag{display:inline-block;font-size:.75rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--forest-800);background:var(--forest-100);border-radius:999px;padding:.2rem .55rem;margin-bottom:.55rem}
+    .steps{counter-reset:step;display:grid;gap:.85rem;margin:1rem 0}.step{position:relative;border:1px solid var(--line);border-radius:12px;padding:1rem 1rem 1rem 4rem;background:#fff}.step::before{counter-increment:step;content:counter(step);position:absolute;left:1rem;top:1rem;width:2rem;height:2rem;display:grid;place-items:center;background:var(--forest-800);color:#fff;border-radius:50%;font-weight:800}.step strong{display:block;color:var(--forest-950);margin-bottom:.2rem}
+    table{width:100%;border-collapse:collapse;margin:1rem 0;font-size:.95rem}th,td{text-align:left;vertical-align:top;border:1px solid var(--line);padding:.75rem}th{background:var(--forest-100);color:var(--forest-950)}tbody tr:nth-child(even){background:#f9fbfa}
+    details{border:1px solid var(--line);border-radius:11px;margin:.7rem 0;background:#fff}summary{cursor:pointer;padding:.85rem 1rem;font-weight:750;color:var(--forest-900)}details>div{padding:0 1rem 1rem}code,kbd{font-family:"Cascadia Mono",Consolas,monospace;font-size:.92em}kbd{border:1px solid #aeb8b3;border-bottom-width:2px;border-radius:4px;background:#f7f8f7;padding:.05rem .35rem}
+    .checklist{list-style:none;padding:0}.checklist li{position:relative;padding:.35rem 0 .35rem 1.8rem}.checklist li::before{content:"✓";position:absolute;left:.2rem;color:var(--forest-700);font-weight:900}
+    .no-results{display:none;background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:2rem}.no-results.show{display:block}
+    footer{background:var(--forest-950);color:#dce9e3;padding:1.6rem clamp(1.4rem,5vw,4.5rem)}footer div{max-width:1460px;margin:auto;display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}footer a{color:#fff}
+    @media(max-width:980px){.hero{grid-template-columns:1fr}.meta{max-width:480px}.layout{grid-template-columns:1fr}nav{position:static}nav ul{columns:2}}
+    @media(max-width:680px){.cards{grid-template-columns:1fr}nav ul{columns:auto;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.1rem}nav a{font-size:.82rem;padding:.45rem .4rem;gap:.35rem}.section{padding:1.15rem}.step{padding-left:3.6rem}table{display:block;overflow-x:auto;white-space:normal}.hero{padding-top:2.2rem}h1{font-size:2.45rem}}
+    @media print{body{background:#fff;font-size:10.5pt}.toolbar,nav,.skip{display:none!important}.layout{display:block;max-width:none;padding:0}.section{box-shadow:none;border:0;border-bottom:1px solid #aaa;border-radius:0;break-inside:avoid;padding:1rem 0}.section.hidden{display:block}.hero{padding:1.2rem 0;display:block}.meta{margin-top:1rem;color:#fff}header{background:#173b30!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}details>div{display:block!important}footer{padding:1rem 0}a{color:inherit;text-decoration:none}.cards{grid-template-columns:repeat(2,1fr)}}
+  </style>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to main content</a>
+  <header>
+    <div class="hero">
+      <div>
+        <p class="eyebrow">Power Apps • Power Automate • AI Builder • Power BI</p>
+        <h1>AI-Powered Forestry Metrics</h1>
+        <p class="subtitle">User guide for locating FMP/FIA documents, running AI-assisted metric analysis, and validating results against InFoDat reporting.</p>
+      </div>
+      <dl class="meta">
+        <div><dt>Guide</dt><dd>1.1.0</dd></div>
+        <div><dt>Solution</dt><dd>1.0.0.1</dd></div>
+        <div><dt>Updated</dt><dd>Sep. 23, 2026</dd></div>
+      </dl>
+    </div>
+  </header>
+  <div class="toolbar" role="search">
+    <label for="guideSearch"><strong>Search this guide</strong></label>
+    <input id="guideSearch" type="search" placeholder="Try “PDF”, “Power BI”, “results”, or “PII”" autocomplete="off">
+    <button type="button" id="clearSearch" class="secondary">Clear</button>
+    <button type="button" id="printGuide">Print / Save PDF</button>
+  </div>
+  <div class="layout">
+    <nav aria-label="Guide sections">
+      <h2>Contents</h2>
+      <ul>
+        <li><a href="#overview"><span class="num">01</span> Overview</a></li>
+        <li><a href="#before"><span class="num">02</span> Before you begin</a></li>
+        <li><a href="#screens"><span class="num">03</span> Screen map</a></li>
+        <li><a href="#documents"><span class="num">04</span> Get documents</a></li>
+        <li><a href="#prepare"><span class="num">05</span> Prepare files</a></li>
+        <li><a href="#analyze"><span class="num">06</span> Run analysis</a></li>
+        <li><a href="#results"><span class="num">07</span> Review results</a></li>
+        <li><a href="#powerbi"><span class="num">08</span> Use Power BI</a></li>
+        <li><a href="#security"><span class="num">09</span> Security and AI</a></li>
+        <li><a href="#troubleshooting"><span class="num">10</span> Troubleshooting</a></li>
+        <li><a href="#quick"><span class="num">11</span> Quick reference</a></li>
+        <li><a href="#support"><span class="num">12</span> Support</a></li>
+      </ul>
+    </nav>
+    <main id="main" tabindex="-1">
+      <div class="no-results" id="noResults"><h2>No matching section</h2><p>Clear the search or use a broader term.</p></div>
+
+      <section class="section searchable" id="overview">
+        <h2>1. Overview</h2>
+        <p class="lead">The app helps authorized forestry staff extract selected information from FMP and FIA PDFs, then compare the AI-generated text with InFoDat information displayed through Power BI.</p>
+        <div class="alert danger"><div aria-hidden="true">⚠</div><div><strong>AI output requires human validation.</strong>Do not treat an extracted value as authoritative until qualified personnel compare it with the source document, supporting references, and applicable program data.</div></div>
+        <div class="cards">
+          <article class="card"><span class="tag">Retrieve</span><h3>Find documents</h3><p>Open the built-in Document Download screen and use the embedded Power BI report to locate FMP/FIA documents.</p></article>
+          <article class="card"><span class="tag">Analyze</span><h3>Extract metrics</h3><p>Submit an FMP PDF, FIA PDF, or both. The workflow uses text recognition and custom prompts to identify relevant passages.</p></article>
+          <article class="card"><span class="tag">Validate</span><h3>Compare results</h3><p>Review Plan Period, Commercial Volume, AAC, IAC, and RAC output beside the InFoDat Power BI report.</p></article>
+        </div>
+        <p>The solution reduces repeated searching, manual reading, copy-and-paste consolidation, and switching among separate tools. It does not approve data, update InFoDat, or make forestry program decisions.</p>
+      </section>
+
+      <section class="section searchable" id="before">
+        <h2>2. Before you begin</h2>
+        <ul class="checklist">
+          <li>Use an authorized organizational account and approved device/network.</li>
+          <li>Confirm access to the Power App and both embedded Power BI reports.</li>
+          <li>Use only documents permitted for the deployment environment.</li>
+          <li>Do not upload PII. The application notice states that it is not designed or approved to process PII.</li>
+          <li>Prepare PDF files no larger than 20 MB, as stated in the app.</li>
+          <li>Know the tribe name and relevant FMP/FIA year before submitting.</li>
+        </ul>
+        <div class="alert info"><div aria-hidden="true">i</div><div><strong>Power BI permissions are separate.</strong>Being able to open the canvas app does not necessarily grant access to an embedded report. Request report access through the approved support channel.</div></div>
+      </section>
+
+      <section class="section searchable" id="screens">
+        <h2>3. Screen map</h2>
+        <div class="cards">
+          <article class="card"><h3>AI App</h3><p>The home and submission screen. It contains the welcome instructions, document-download link, tribe and email fields, year fields, FMP/FIA attachment controls, toggles, and <strong>Submit for Data Metrics</strong>.</p></article>
+          <article class="card"><h3>Document Download</h3><p>Opened with <strong>Click to Access</strong>. It contains a full-screen Power BI report for finding and downloading FMP/FIA documents. Select <strong>Home</strong> to return.</p></article>
+          <article class="card"><h3>Results</h3><p>Shows five scrollable AI-output areas on the left and an InFoDat Power BI report on the right. A popup explains how to compare and validate the results.</p></article>
+        </div>
+        <h3>Home-screen inputs</h3>
+        <table>
+          <thead><tr><th>Input</th><th>What to enter</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td>Tribe name</td><td>The tribe associated with the submitted document(s).</td><td>Used to identify/correlate the processing job and appears on Results.</td></tr>
+            <tr><td>Email</td><td>The requested notification/contact address.</td><td>Notification routing is deployment-configured; do not rely on email as the only proof of completion.</td></tr>
+            <tr><td>Year of FMP analyzed</td><td>The year applicable to the FMP document.</td><td>Enter when submitting an FMP.</td></tr>
+            <tr><td>Year of FIA analyzed</td><td>The year applicable to the FIA document.</td><td>Enter when submitting an FIA.</td></tr>
+            <tr><td>FMP attachment</td><td>One approved FMP PDF.</td><td>The toggle should indicate that the file is included.</td></tr>
+            <tr><td>FIA attachment</td><td>One approved FIA PDF.</td><td>The toggle should indicate that the file is included.</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="section searchable" id="documents">
+        <h2>4. Get FMP and FIA documents</h2>
+        <div class="steps">
+          <div class="step"><strong>Open Document Download.</strong>On the home screen, select <strong>Click to Access</strong> beneath “Download FIA &amp; FMP Documents for AI Analysis.”</div>
+          <div class="step"><strong>Wait for the embedded report.</strong>Sign in or request Power BI access when prompted. Allow report visuals and filters to finish loading.</div>
+          <div class="step"><strong>Filter to the correct record.</strong>Use the report's tribe, document type, year, or other available filters. Confirm that the selected document belongs to the intended tribe and reporting context.</div>
+          <div class="step"><strong>Download through the approved control.</strong>Store the document only in an approved location and preserve its original filename when practical.</div>
+          <div class="step"><strong>Return home.</strong>Select <strong>Home</strong> at the bottom of the Document Download screen.</div>
+        </div>
+        <div class="alert"><div aria-hidden="true">!</div><div><strong>Check before upload.</strong>A similar title or year does not guarantee that a document is correct. Confirm tribe, document type, period, and approval status.</div></div>
+      </section>
+
+      <section class="section searchable" id="prepare">
+        <h2>5. Prepare files</h2>
+        <table>
+          <thead><tr><th>Requirement</th><th>Guidance</th></tr></thead>
+          <tbody>
+            <tr><td>Format</td><td>Use PDF. The workflow identifies DOCX as an invalid document type and directs users to convert it to PDF.</td></tr>
+            <tr><td>Size</td><td>Keep each PDF at or below 20 MB, as stated in the app. For a larger PDF, use an approved PDF-reduction process before uploading.</td></tr>
+            <tr><td>Count</td><td>One FMP attachment and one FIA attachment maximum per submission.</td></tr>
+            <tr><td>Quality</td><td>Use the clearest approved copy available. Poor scans, missing pages, rotated text, handwriting, and complex tables may reduce extraction quality.</td></tr>
+            <tr><td>Content</td><td>Do not include PII. Confirm the document is allowed within the app's authorization boundary.</td></tr>
+          </tbody>
+        </table>
+        <details><summary>Which combination can I submit?</summary><div><p>You may submit FMP only, FIA only, or both. At least one valid document should be attached. Enter the corresponding year for each selected document.</p></div></details>
+        <details><summary>How should I reduce a large PDF?</summary><div><p>Use an approved PDF application and your organization's authorized “reduced size” or optimization function. Reopen the reduced file, confirm all pages are present and readable, and verify that the file is 20 MB or smaller.</p></div></details>
+      </section>
+
+      <section class="section searchable" id="analyze">
+        <h2>6. Run the analysis</h2>
+        <div class="steps">
+          <div class="step"><strong>Close the welcome popup.</strong>Read the instructions and select <strong>Let's Go!</strong>.</div>
+          <div class="step"><strong>Enter the tribe name and requested email.</strong>Check spelling and avoid extra spaces. Use the approved contact address for the deployment.</div>
+          <div class="step"><strong>Enter the applicable year(s).</strong>Complete the FMP year, FIA year, or both to match the attached documents.</div>
+          <div class="step"><strong>Attach the PDF(s).</strong>Select <strong>Click to Attach</strong> in the FMP and/or FIA area. Confirm the displayed filename is correct.</div>
+          <div class="step"><strong>Confirm each document toggle.</strong>The FMP or FIA toggle should be on for every attached file that should be analyzed.</div>
+          <div class="step"><strong>Submit once.</strong>Select <strong>Submit for Data Metrics</strong>. A submission message appears and the app moves to Results while processing continues.</div>
+        </div>
+        <div class="alert danger"><div aria-hidden="true">⚠</div><div><strong>Avoid duplicate jobs.</strong>Do not select Submit repeatedly or start another submission merely because results are not immediate. Record the time and follow the troubleshooting procedure first.</div></div>
+        <h3>What happens after submission</h3>
+        <p>The flow creates a queued SharePoint job, returns a job identifier to the app, changes the job to running, recognizes text, processes the selected metric prompts, and writes the completed output. Processing time depends on document length, scan quality, service capacity, and system availability.</p>
+      </section>
+
+      <section class="section searchable" id="results">
+        <h2>7. Review and validate results</h2>
+        <p>When the Results screen opens, read the instruction popup and select <strong>Close</strong>. The left side displays AI-generated text; the right side displays the embedded InFoDat report.</p>
+        <table>
+          <thead><tr><th>Result area</th><th>Review focus</th></tr></thead>
+          <tbody>
+            <tr><td>FMP Plan Period</td><td>Confirm the period, dates, and supporting passage in the FMP.</td></tr>
+            <tr><td>Commercial Volume</td><td>Confirm units, scope, period, qualifiers, and source context.</td></tr>
+            <tr><td>AAC</td><td>Apply the program office's approved AAC definition and validate source references.</td></tr>
+            <tr><td>IAC</td><td>Apply the program office's approved IAC definition and validate source references.</td></tr>
+            <tr><td>RAC</td><td>Apply the program office's approved RAC definition and validate source references.</td></tr>
+          </tbody>
+        </table>
+        <div class="steps">
+          <div class="step"><strong>Read the full output.</strong>Each result area can scroll. Do not rely on the first visible line.</div>
+          <div class="step"><strong>Check source references.</strong>Use any cited page, section, or quoted text to locate the evidence in the original PDF.</div>
+          <div class="step"><strong>Compare with InFoDat.</strong>Filter the embedded Power BI report to the same tribe and context.</div>
+          <div class="step"><strong>Resolve differences.</strong>Determine whether the difference comes from document version, period, unit, definition, report filter, refresh timing, or AI interpretation.</div>
+          <div class="step"><strong>Escalate substantive discrepancies.</strong>Follow the approved process, including notifying the appropriate Regional Forester when required.</div>
+        </div>
+        <p>Select <strong>Home</strong> at the bottom of the Results screen to return to the submission screen. Returning home does not edit InFoDat or change prior results.</p>
+      </section>
+
+      <section class="section searchable" id="powerbi">
+        <h2>8. Use the embedded Power BI reports</h2>
+        <h3>Document Download report</h3>
+        <p>Use this report to locate FMP/FIA documents before analysis. Apply filters carefully, verify the correct record, and use only approved download or link controls.</p>
+        <h3>InFoDat comparison report</h3>
+        <p>Use the report on Results to compare AI-generated output with current authorized reporting. The report is read-only from the app user's perspective; interacting with filters does not change InFoDat data.</p>
+        <div class="cards">
+          <article class="card"><h4>Filter</h4><p>Select the intended tribe, period, document type, or other available context. Hidden filters can change what a visual shows.</p></article>
+          <article class="card"><h4>Inspect</h4><p>Use tooltips, focus mode, drill, or detail views only when enabled and appropriate.</p></article>
+          <article class="card"><h4>Reset</h4><p>Clear selections or reset to the report's default state before concluding that data is missing.</p></article>
+        </div>
+        <div class="alert info"><div aria-hidden="true">i</div><div><strong>Access and refresh matter.</strong>A blank report can result from missing Power BI permission, filters, network/service issues, or refresh timing. Browser refresh does not necessarily refresh the underlying semantic model.</div></div>
+      </section>
+
+      <section class="section searchable" id="security">
+        <h2>9. Security, data handling, and responsible AI use</h2>
+        <div class="alert danger"><div aria-hidden="true">⚠</div><div><strong>No PII.</strong>The application notice states that no PII is used and that the solution is not designed or approved to process PII. Do not upload PII without explicit prior authorization and a formally approved change to the system.</div></div>
+        <ul class="checklist">
+          <li>Use the app only for authorized work and approved document types.</li>
+          <li>Handle CUI and tribal data within the approved environment and sharing boundaries.</li>
+          <li>Do not paste document text or AI output into public issues, chat systems, or unapproved tools.</li>
+          <li>Do not treat AI output as a final decision, approval, or authoritative record.</li>
+          <li>Watch for prompt injection or instructions embedded in documents; report unusual output.</li>
+          <li>Store downloads and exports only in approved locations and follow records requirements.</li>
+          <li>Use the minimum necessary information in support tickets.</li>
+        </ul>
+        <h3>AI use in the solution</h3>
+        <p>The production workflow uses AI Builder for text recognition and custom-prompt analysis. DOI-approved Copilot Chat also supported development and iterative updates such as drafting, formula refinement, testing ideas, troubleshooting, and documentation. In both cases, people remain responsible for validation, testing, approval, and deployment.</p>
+      </section>
+
+      <section class="section searchable" id="troubleshooting">
+        <h2>10. Troubleshooting</h2>
+        <table>
+          <thead><tr><th>Issue</th><th>What to check</th><th>Next step</th></tr></thead>
+          <tbody>
+            <tr><td>Cannot attach a file</td><td>Confirm PDF format, one file per attachment area, approved filename, and size at or below 20 MB.</td><td>Create an approved reduced-size PDF or obtain a clean copy.</td></tr>
+            <tr><td>DOCX or Word file fails</td><td>The workflow is configured to reject DOCX for analysis.</td><td>Convert to PDF using an approved process and verify the converted document.</td></tr>
+            <tr><td>Submit does not produce results</td><td>Confirm at least one PDF is attached, the matching toggle is on, and required metadata is complete. Processing may still be running.</td><td>Do not submit repeatedly. Record the time and contact support with sanitized details.</td></tr>
+            <tr><td>One metric area is blank</td><td>Confirm the relevant FMP/FIA was selected, the document contains that metric, and processing completed.</td><td>Validate the source document and request a flow/job review.</td></tr>
+            <tr><td>Power BI is blank or denied</td><td>Check sign-in, report permission, filters, network, and service availability.</td><td>Request Power BI access through the approved channel.</td></tr>
+            <tr><td>AI value differs from source</td><td>Check page references, units, period, qualifiers, and report filters.</td><td>Use the source as the basis for review and follow the discrepancy escalation path.</td></tr>
+            <tr><td>No email received</td><td>Notification routing is deployment-specific and may not use the entered address in every release.</td><td>Check app results and contact the product owner; do not rely on email alone.</td></tr>
+          </tbody>
+        </table>
+        <h3>Useful support details</h3>
+        <p>Provide solution version, approximate submission time, affected screen, non-sensitive filenames, selected document combination, browser/player context, and a sanitized description. Include the job ID only through an approved internal channel. Never attach production documents or protected output to a public issue.</p>
+      </section>
+
+      <section class="section searchable" id="quick">
+        <h2>11. Quick reference</h2>
+        <div class="steps">
+          <div class="step"><strong>Get the right PDFs.</strong>Use Document Download and verify tribe, type, year, and version.</div>
+          <div class="step"><strong>Prepare the files.</strong>PDF only, one FMP and/or one FIA, each at or below 20 MB.</div>
+          <div class="step"><strong>Complete metadata.</strong>Enter tribe name, requested email, and applicable year(s).</div>
+          <div class="step"><strong>Attach and confirm toggles.</strong>Check every displayed filename.</div>
+          <div class="step"><strong>Submit once.</strong>Select Submit for Data Metrics and avoid duplicate submissions.</div>
+          <div class="step"><strong>Validate everything.</strong>Compare AI output with source references and the InFoDat Power BI report.</div>
+        </div>
+      </section>
+
+      <section class="section searchable" id="support">
+        <h2>12. Support and feedback</h2>
+        <p>Use the approved internal service desk or product-owner channel for access, failures, permissions, and operational questions. Use the established forestry-program escalation path for substantive data discrepancies.</p>
+        <p>A good sanitized report states: “Solution 1.0.0.1; FMP-only test; submitted at approximately 10:15 local time; Results remained blank; no protected data included; no duplicate submission made.”</p>
+        <div class="alert"><div aria-hidden="true">!</div><div><strong>Protect the record.</strong>Do not include source documents, AI-generated content, personal information, internal URLs, tenant/report identifiers, credentials, or signed links in a public GitHub issue.</div></div>
+      </section>
+    </main>
+  </div>
+  <footer><div><span>AI-Powered Forestry Metrics • User Guide 1.1.0</span><span>Human validation required for all AI-generated output.</span></div></footer>
+  <script>
+    (() => {
+      const input = document.getElementById('guideSearch');
+      const clear = document.getElementById('clearSearch');
+      const print = document.getElementById('printGuide');
+      const sections = [...document.querySelectorAll('.searchable')];
+      const noResults = document.getElementById('noResults');
+      const apply = () => {
+        const q = input.value.trim().toLowerCase();
+        let visible = 0;
+        sections.forEach(section => {
+          const match = !q || section.textContent.toLowerCase().includes(q);
+          section.classList.toggle('hidden', !match);
+          if (match) visible += 1;
+        });
+        noResults.classList.toggle('show', visible === 0);
+      };
+      input.addEventListener('input', apply);
+      clear.addEventListener('click', () => { input.value = ''; apply(); input.focus(); });
+      print.addEventListener('click', () => window.print());
+    })();
+  </script>
+</body>
+</html>
